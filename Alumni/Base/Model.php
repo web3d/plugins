@@ -55,7 +55,7 @@ class Alumni_Base_Model {
      * @return boolean
      */
     public function insert($data) {
-        $query = $this->db->sql()->insert("table.{$this->table}")->rows($data);
+        $query = $this->db->insert("table.{$this->table}")->rows($data);
         
         return $this->db->query($query);
     }
@@ -67,7 +67,7 @@ class Alumni_Base_Model {
      * @return boolean
      */
     public function update($condition, $data) {
-        $query = $this->db->sql()->update("table.{$this->table}")->where($this->parseCondition($condition))->rows($data);
+        $query = $this->db->update("table.{$this->table}")->where($this->parseCondition($condition))->rows($data);
         
         return $this->db->query($query);
     }
@@ -78,7 +78,7 @@ class Alumni_Base_Model {
      * @return boolean
      */
     public function delete($condition) {
-        $query = $this->db->sql()->delete("table.{$this->table}")->where($this->parseCondition($condition));
+        $query = $this->db->delete("table.{$this->table}")->where($this->parseCondition($condition));
         
         return $this->db->query($query);
     }
