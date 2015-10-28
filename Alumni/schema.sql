@@ -1,13 +1,13 @@
 
-CREATE TABLE IF NOT EXISTS `table.alumni_department` (
+CREATE TABLE `table.alumni_department` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   `class_num` int(11) DEFAULT '0',
   `parent_id` int(11) DEFAULT '0',
-  PRIMARY KEY (`DeptID`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS `table.alumni_class` (
+CREATE TABLE `table.alumni_class` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `stud_count` smallint(6) DEFAULT '1',
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `table.alumni_class` (
   KEY `enrollment_year` (`enrollment_year`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS `table.alumni_class_contact` (
+CREATE TABLE `table.alumni_class_contact` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `class_id` int(11) NOT NULL,
   `name` varchar(20) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `table.alumni_class_contact` (
   PRIMARY KEY `Auto_Increment_Key` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=0;
 
-CREATE TABLE IF NOT EXISTS `table.alumni_class_log` (
+CREATE TABLE `table.alumni_class_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
   `content` varchar(255) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `table.alumni_class_log` (
   KEY `Auto_Increment_Key` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS `table.alumni_class_photo` (
+CREATE TABLE `table.alumni_class_photo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `file_name` varchar(50) DEFAULT NULL,
   `file_size` int(11) DEFAULT '0',
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `table.alumni_class_photo` (
   KEY `typeid` (`type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `table.alumni_class_photo_comment` (
+CREATE TABLE `table.alumni_class_photo_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pic_id` int(11) NOT NULL,
   `name` varchar(20) NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `table.alumni_class_photo_comment` (
   KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `table.alumni_class_board` (
+CREATE TABLE `table.alumni_class_board` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(200) DEFAULT NULL,
   `content` text,
@@ -104,10 +104,10 @@ CREATE TABLE IF NOT EXISTS `table.alumni_class_board` (
   `sign_time` datetime DEFAULT NULL,
   UNIQUE KEY `id` (`id`),
   KEY `classid` (`class_id`),
-  KEY `name` (`name`)
+  KEY `name` (`title`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS `table.alumni_user_profile` (
+CREATE TABLE `table.alumni_user_profile` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(32) NOT NULL,
   `realname` varchar(10) DEFAULT NULL,
@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `table.alumni_user_profile` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 
-CREATE TABLE IF NOT EXISTS `table.alumni_user_class` (
+CREATE TABLE `table.alumni_user_class` (
   `uid` int(11) NOT NULL,
   `class_id` int(11) NOT NULL,
   `visit_count` int(11) DEFAULT '0',
@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `table.alumni_user_class` (
   KEY `jointime` (`join_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `table.alumni_user_friend` (
+CREATE TABLE `table.alumni_user_friend` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) DEFAULT '0',
   `redun_username` varchar(32) NOT NULL,
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `table.alumni_user_friend` (
   KEY `Auto_Increment_Key` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS `table.alumni_user_message` (
+CREATE TABLE `table.alumni_user_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sender` varchar(50) NOT NULL,
   `incept` varchar(50) NOT NULL,
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `table.alumni_user_message` (
   KEY `Auto_Increment_Key` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS `table.alumni_teacher` (
+CREATE TABLE `table.alumni_teacher` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   `telephone` varchar(15) DEFAULT NULL,
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `table.alumni_teacher` (
   KEY `Auto_Increment_Key` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `table.alumni_user_online` (
+CREATE TABLE `table.alumni_user_online` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL DEFAULT '0',
   `username` varchar(50) NOT NULL,
@@ -207,6 +207,6 @@ CREATE TABLE IF NOT EXISTS `table.alumni_user_online` (
   `active_time` datetime NOT NULL,
   `location` varchar(120) DEFAULT NULL,
   `act` varchar(50) DEFAULT NULL,
-  KEY `onlineuserid` (`userid`),
+  KEY `onlineuserid` (`uid`),
   PRIMARY KEY `Auto_Increment_Key` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
