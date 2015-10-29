@@ -41,6 +41,14 @@ class Alumni_Base_Action extends Typecho_Widget implements Widget_Interface_Do {
      * Action类Class.php的名字如Class 子Action Class/Board.php的名字Action/Board
      */
     protected $actionName = null;
+    
+    /**
+     * 错误码 需要登录
+     */
+    const ERR_NEED_LOGIN = 'TE00002';
+    const ERR_OPER_FAIL = 'TE00003';
+    const ERR_OPER_SUCC = 'TE00001';
+    const ERR_OPER_OTHER = 'TE00000';
 
     public function __construct($request, $response, $params = NULL) {
         parent::__construct($request, $response, $params);
@@ -146,6 +154,38 @@ class Alumni_Base_Action extends Typecho_Widget implements Widget_Interface_Do {
         
         return dirname(dirname(__FILE__)) 
                 . "/views/{$this->themeDir}/{$this->actionName}/{$view}";
+    }
+    
+    /**
+     * 返回错误
+     * @param string $code 子错误码
+     * @param string $msg 错误描述
+     */
+    protected function responseFail($code, $msg) {
+        $this->response(array('ret' => 0, 'code' => $code, 'msg' => $msg));
+    }
+    
+    /**
+     * 返回处理成功
+     * @param mixed $data
+     */
+    protected function responseOK($data) {
+        $this->response(array('ret' => 1, 'data' => $data));
+    }
+    
+    /**
+     * 返回列表型数据
+     * @param mixed $data
+     * @param int $totalCount
+     * @param int $pageIndex
+     * @param int $pageSize
+     */
+    protected function responseList($data, $totalCount, $pageIndex = 1, $pageSize = 10) {
+        $this->response(array('ret' => 1, 'count' => (int)$totalCount, 'pageIndex' => (int)$pageIndex, 'pageSize' => (int)$pageSize, 'data' => $data));
+    }
+    
+    public function response($data) {
+        $this->response->throwJson($data);
     }
 
 }
