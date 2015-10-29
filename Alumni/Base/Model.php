@@ -88,9 +88,14 @@ class Alumni_Base_Model {
         return $this->db->query($query);
     }
     
+    /**
+     * 根据条件统计
+     * @param mixed $condition
+     * @return boolean
+     */
     public function count($condition) {
         $query = $this->db->select('COUNT(*) AS TECOUNT')->from("table.{$this->table}")->where($this->parseCondition($condition));
-        $result = $this->db->query($query);
+        $result = $this->db->fetchRow($query);
         return $result['TECOUNT'];
     }
 
