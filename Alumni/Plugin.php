@@ -76,9 +76,9 @@ class Alumni_Plugin implements Typecho_Plugin_Interface {
     }
 
     //在前台登陆页面增加oauth跳转图标
-    public static function authorizeIcon() {
+    /*public static function authorizeIcon() {
         return '<a href="' . Typecho_Router::url('sinauthAuthorize', array('feed' => '/atom/comments/')) . '">新浪登陆</a>';
-    }
+    }*/
 
     /**
      * 禁用插件方法,如果禁用失败,直接抛出异常

@@ -8,7 +8,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 	<?php while($this->next()): ?>
    
         <article class="post">
-			<h2 class="post-title" itemprop="name headline"><a itemtype="url" href="<?php echo $this->url('alumni_class_view', array('deptid' => $this->row['id'])); ?>"><?php echo $this->row['name']; ?></a></h2>
+			<h2 class="post-title" itemprop="name headline"><a itemtype="url" href="<?php echo $this->url('alumni_class_view', array('id' => $this->row['id'])); ?>"><?php echo $this->row['name']; ?></a></h2>
 			
             
         </article>
