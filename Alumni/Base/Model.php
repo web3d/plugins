@@ -30,11 +30,12 @@ class Alumni_Base_Model {
     /**
      * 取出单条数据
      * @param mixed $condition
+     * @param string $fields
      * @param array $filter
      * @return array
      */
-    public function fetch($condition, array $filter = NULL) {
-        $query = $this->db->sql()->select('*')->from("table.{$this->table}")->where($this->parseCondition($condition));
+    public function fetch($condition, $fields = '*', array $filter = NULL) {
+        $query = $this->db->sql()->select($fields)->from("table.{$this->table}")->where($this->parseCondition($condition));
 
         return $this->db->fetchRow($query, $filter);
     }
@@ -42,10 +43,13 @@ class Alumni_Base_Model {
     /**
      * 小量数据一次性取出多条数据
      * @param mixed $condition
+     * @param string $fields
+     * @param int $pageIndex
+     * @param int $pageSize
      * @param array $filter
      */
-    public function fetchAll($condition, $pageIndex = 1, $pageSize = 10, array $filter = NULL) {
-        $query = $this->db->sql()->select('*')->from("table.{$this->table}")->where($this->parseCondition($condition))->page($pageIndex, $pageSize);
+    public function fetchAll($condition, $fields = '*', $pageIndex = 1, $pageSize = 10, array $filter = NULL) {
+        $query = $this->db->sql()->select($fields)->from("table.{$this->table}")->where($this->parseCondition($condition))->page($pageIndex, $pageSize);
 
         return $this->db->fetchAll($query, $filter);
     }
