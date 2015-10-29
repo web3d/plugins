@@ -80,14 +80,37 @@ class Alumni_Action_Class extends Alumni_Base_Action {
         if (!$result) {
             $this->responseFail(self::ERR_OPER_FAIL, '申请操作失败');
         }
-        $this->responseOK('成功提交申请,请登录管理员审核');
+        $this->responseOK('成功提交申请,请等待管理员审核');
     }
     
     /**
      * 创建
      */
     public function create() {
+        if (!$this->user->hasLogin()) {
+            $this->responseFail(self::ERR_NEED_LOGIN, '请登录后再操作');
+        }
         
+        //Submit
+        $name = trim($this->request->get('name'));
+        $enyear = (int)trim($this->request->get('enyear'));
+        $dept_id = (int) $this->request->get('deptid');
+        
+        if (empty($name) || $enyear < 1950 || $enyear > date('Y') || $dept_id < 1) {
+            $this->responseFail(self::ERR_OPER_FAIL, '请输入有效数据');
+        }
+        $dept_model = new Alumni_Model_Department;
+        $dept = $dept_model->fetch($dept_id);
+        if (!$dept || $dept['parent_id'] < 1) {
+            $this->responseFail(self::ERR_OPER_FAIL, '请选择到院系');
+        }
+        
+        $model = new Alumni_Model_Class;
+        $result = $model->create($name, $enyear, $this->user->uid, $dept_id);
+        if (!$result) {
+            $this->responseFail(self::ERR_OPER_FAIL, '创建操作失败');
+        }
+        $this->responseOK($name . '创建成功');
     }
 
 }

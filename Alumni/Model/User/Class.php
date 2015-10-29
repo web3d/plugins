@@ -44,7 +44,7 @@ class Alumni_Model_User_Class extends Alumni_Base_Model {
         $data = array(
             'uid' => $uid,
             'class_id' => $classId,
-            'join_time' => date('Y-m-d H:i:s')
+            'join_time' => Alumni_Base_Helper::datetime()
         );
         
         return $this->insert($data);
