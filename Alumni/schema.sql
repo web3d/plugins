@@ -140,6 +140,7 @@ CREATE TABLE `table.alumni_user_profile` (
 
 
 CREATE TABLE `table.alumni_user_class` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
   `class_id` int(11) NOT NULL,
   `visit_count` int(11) DEFAULT '0',
@@ -147,6 +148,7 @@ CREATE TABLE `table.alumni_user_class` (
   `last_visit` datetime DEFAULT NULL,
   `degree` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `is_auditing` tinyint(1) DEFAULT '0',
+PRIMARY KEY `Auto_Increment_Key` (`id`),
   KEY `isauditing` (`is_auditing`),
   KEY `joinclassclassid` (`class_id`),
   KEY `joinclassuserid` (`uid`),
