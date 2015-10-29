@@ -22,4 +22,41 @@ class Alumni_Model_User_Class extends Alumni_Base_Model {
     public function countByClass($classId) {
         return $this->count(array('class_id' => $classId));
     }
+    
+    /**
+     * 判断用户是否已加入班级
+     * @param int $uid
+     * @param int $classId
+     * @return boolean
+     */
+    public function hasJoined($uid, $classId) {
+        $row = $this->count(array('uid' => $uid, 'class_id' => $classId));
+        return $row ? true : false;
+    }
+    
+    /**
+     * 用户申请加入
+     * @param int $uid
+     * @param int $classId
+     * @return int
+     */
+    public function join($uid, $classId) {
+        $data = array(
+            'uid' => $uid,
+            'class_id' => $classId,
+            'join_time' => date('Y-m-d H:i:s')
+        );
+        
+        return $this->insert($data);
+    }
+    
+    /**
+     * 设置通过加入或拒绝
+     * @param int $id
+     * @param boolean $passed
+     * @return boolean
+     */
+    public function passed($id, $passed = true) {
+        return $this->update($id, array('is_auditing' => $passed ? 1 : 0));
+    }
 }

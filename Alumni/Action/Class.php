@@ -50,14 +50,37 @@ class Alumni_Action_Class extends Alumni_Base_Action {
             throw new Typecho_Exception('指定的班级不存在,请返回重试!', 404);
         }
         
-        $this->render('view', array('class' => $class));
+        $ucmodel = new Alumni_Model_User_Class;
+        $cur_user_joined = false;
+        if ($this->user->uid) {
+            $cur_user_joined = $ucmodel->hasJoined($this->user->uid, $id);
+        }
+        
+        $this->render('view', array('class' => $class, 'has_joined' => $cur_user_joined));
     }
     
     /**
      * 申请加入
      */
     public function join() {
+        if (!$this->user->hasLogin()) {
+            $this->responseFail(self::ERR_NEED_LOGIN, '请登录后再操作');
+        }
         
+        $id = (int) $this->request->get('id');
+        
+        $ucmodel = new Alumni_Model_User_Class;
+        
+        $cur_user_joined = $ucmodel->hasJoined($this->user->uid, $id);
+        if ($cur_user_joined) {
+            $this->responseFail(self::ERR_OPER_OTHER, '你已经加入了或正在审核中,无需重复操作');
+        }
+        
+        $result = $ucmodel->join($this->user->uid, $id);
+        if (!$result) {
+            $this->responseFail(self::ERR_OPER_FAIL, '申请操作失败');
+        }
+        $this->responseOK('成功提交申请,请登录管理员审核');
     }
     
     /**
