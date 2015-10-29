@@ -33,6 +33,7 @@ class Alumni_Plugin implements Typecho_Plugin_Interface {
         //向系统前台注册新的action
         Helper::addRoute('alumni_main', '/alumni/', 'Alumni_Action_Main', 'action');
         Helper::addRoute('alumni_dept_main', '/alumni/depts', 'Alumni_Action_Dept', 'action');
+        Helper::addRoute('alumni_dept_main_ajax', '/alumni/depts/ajax', 'Alumni_Action_Dept', 'ajaxQuery');
         Helper::addRoute('alumni_dept_view', '/alumni/dept[id:digital]', 'Alumni_Action_Dept', 'view');
         Helper::addRoute('alumni_class_main', '/alumni/classes', 'Alumni_Action_Class', 'action');
         Helper::addRoute('alumni_class_main_bydeptid', '/alumni/classes/[deptid:digital]', 'Alumni_Action_Class', 'action');
