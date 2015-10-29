@@ -35,7 +35,8 @@ class Alumni_Plugin implements Typecho_Plugin_Interface {
         Helper::addRoute('alumni_dept_main', '/alumni/depts', 'Alumni_Action_Dept', 'action');
         Helper::addRoute('alumni_dept_view', '/alumni/dept[id:digital]', 'Alumni_Action_Dept', 'view');
         Helper::addRoute('alumni_class_main', '/alumni/classes', 'Alumni_Action_Class', 'action');
-        Helper::addRoute('alumni_class_view', '/alumni/class/[deptid:digital]', 'Alumni_Action_Class', 'view');
+        Helper::addRoute('alumni_class_main_bydeptid', '/alumni/classes/[deptid:digital]', 'Alumni_Action_Class', 'action');
+        Helper::addRoute('alumni_class_view', '/alumni/class/[id:digital]', 'Alumni_Action_Class', 'view');
         Helper::addRoute('alumni_class_join', '/alumni/class/join', 'Alumni_Action_Class', 'join');
         Helper::addRoute('alumni_class_create', '/alumni/class/create', 'Alumni_Action_Class', 'create');
         Helper::addRoute('alumni_user', '/alumni/user', 'Alumni_Action_User', 'action');
