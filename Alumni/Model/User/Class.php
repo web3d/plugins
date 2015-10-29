@@ -38,12 +38,14 @@ class Alumni_Model_User_Class extends Alumni_Base_Model {
      * 用户申请加入
      * @param int $uid
      * @param int $classId
+     * @param boolean $passed
      * @return int
      */
-    public function join($uid, $classId) {
+    public function join($uid, $classId, $passed = false) {
         $data = array(
             'uid' => $uid,
             'class_id' => $classId,
+            'is_auditing' => $passed ? 1 : 0,
             'join_time' => Alumni_Base_Helper::datetime()
         );
         

@@ -110,6 +110,11 @@ class Alumni_Action_Class extends Alumni_Base_Action {
         if (!$result) {
             $this->responseFail(self::ERR_OPER_FAIL, '创建操作失败');
         }
+        $uc_model = new Alumni_Model_User_Class;
+        $result = $uc_model->join($this->user->uid, $result, true);
+        if (!$result) {
+            $this->responseFail(self::ERR_OPER_FAIL, '创建操作失败');
+        }
         $this->responseOK($name . '创建成功');
     }
 
