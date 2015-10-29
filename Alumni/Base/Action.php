@@ -85,7 +85,7 @@ class Alumni_Base_Action extends Typecho_Widget implements Widget_Interface_Do {
      * @param array $args 参数
      * @return string
      */
-    protected function url($route, $args) {
+    protected function url($route, array $args = NULL) {
         return Typecho_Router::url($route, $args, $this->options->index());
     }
 
