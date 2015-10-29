@@ -42,7 +42,15 @@ class Alumni_Action_Class extends Alumni_Base_Action {
      * 查看班级
      */
     public function view() {
+        $id = (int) $this->request->get('id');
         
+        $model = new Alumni_Model_Class;
+        $class = $model->fetch($id);
+        if (!$class) {
+            throw new Typecho_Exception('指定的班级不存在,请返回重试!', 404);
+        }
+        
+        $this->render('view', array('class' => $class));
     }
     
     /**
