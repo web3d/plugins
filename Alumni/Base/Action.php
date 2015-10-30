@@ -41,15 +41,6 @@ class Alumni_Base_Action extends Typecho_Widget implements Widget_Interface_Do {
      * Action类Class.php的名字如Class 子Action Class/Board.php的名字Action/Board
      */
     protected $actionName = null;
-    
-    /**
-     * 错误码 需要登录
-     */
-    const ERR_NEED_LOGIN = 'TE00002';
-    const ERR_OPER_FAIL = 'TE00003';
-    const ERR_OPER_SUCC = 'TE00001';
-    const ERR_OPER_OTHER = 'TE00000';
-    const ERR_NOT_FOUND = 'TE00004';
 
     public function __construct($request, $response, $params = NULL) {
         parent::__construct($request, $response, $params);
@@ -187,6 +178,7 @@ class Alumni_Base_Action extends Typecho_Widget implements Widget_Interface_Do {
     
     public function response($data) {
         $this->response->throwJson($data);
+        exit;
     }
 
 }
