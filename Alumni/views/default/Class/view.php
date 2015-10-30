@@ -17,7 +17,7 @@ $this->need('header.php', true);
         <?php foreach ($class as $key => $value): ?>
         <p><?php echo $key;?>:<?php echo $value;?></p>
         <?php endforeach;?>
-
+        
 	
 </div><!-- end #main-->
 

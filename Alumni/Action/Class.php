@@ -20,7 +20,7 @@ class Alumni_Action_Class extends Alumni_Base_Action {
     }
 
     /**
-     * 班级列表
+     * 班级列表 Web
      */
     public function action() {
         $dept_id = (int) $this->request->get('deptid');
@@ -33,13 +33,13 @@ class Alumni_Action_Class extends Alumni_Base_Action {
         $page_size = 10;//TODO 后台配置?
         
         $model = new Alumni_Model_Class;
-        $this->stack = $model->fetchAll($condition, $page_index, $page_size);
+        $this->stack = $model->fetchAll($condition, '*', $page_index, $page_size);
         
         $this->render('index');
     }
     
     /**
-     * 查看班级
+     * 查看班级 Web
      */
     public function view() {
         $id = (int) $this->request->get('id');
@@ -50,9 +50,9 @@ class Alumni_Action_Class extends Alumni_Base_Action {
             throw new Typecho_Exception('指定的班级不存在,请返回重试!', 404);
         }
         
-        $ucmodel = new Alumni_Model_User_Class;
         $cur_user_joined = false;
         if ($this->user->uid) {
+            $ucmodel = new Alumni_Model_User_Class;
             $cur_user_joined = $ucmodel->hasJoined($this->user->uid, $id);
         }
         
@@ -60,62 +60,70 @@ class Alumni_Action_Class extends Alumni_Base_Action {
     }
     
     /**
-     * 申请加入
+     * 申请加入 ajax
      */
     public function join() {
-        if (!$this->user->hasLogin()) {
-            $this->responseFail(self::ERR_NEED_LOGIN, '请登录后再操作');
-        }
+        $this->forceLogin();
         
         $id = (int) $this->request->get('id');
         
-        $ucmodel = new Alumni_Model_User_Class;
+        $uc_service = new Alumni_Service_UserClass();
         
-        $cur_user_joined = $ucmodel->hasJoined($this->user->uid, $id);
-        if ($cur_user_joined) {
-            $this->responseFail(self::ERR_OPER_OTHER, '你已经加入了或正在审核中,无需重复操作');
-        }
-        
-        $result = $ucmodel->join($this->user->uid, $id);
+        $result = $uc_service->join($this->user->uid, $id);
         if (!$result) {
-            $this->responseFail(self::ERR_OPER_FAIL, '申请操作失败');
+            $this->responseFail($uc_service->getErrorCode(), $uc_service->getErrorMessaage());
         }
+        
         $this->responseOK('成功提交申请,请等待管理员审核');
     }
     
     /**
-     * 创建
+     * 班级管理员审核加入申请 ajax
+     */
+    public function review() {
+        $this->forceLogin();
+        //TODO 判断权限
+        
+        $ucid = (int) $this->request->get('ucid');
+        $passed = (int) $this->request->get('passed');
+        
+        $uc_service = new Alumni_Service_UserClass;
+        
+        $result = $uc_service->review($this->user->uid, $ucid, $passed);
+        if (!$result) {
+            $this->responseFail($uc_service->getErrorCode(), $uc_service->getErrorMessaage());
+        }
+        
+        $this->responseOK('操作成功');
+    }
+    
+    /**
+     * 创建 ajax
      */
     public function create() {
-        if (!$this->user->hasLogin()) {
-            $this->responseFail(self::ERR_NEED_LOGIN, '请登录后再操作');
-        }
+        $this->forceLogin();
         
         //Submit
         $name = trim($this->request->get('name'));
         $enyear = (int)trim($this->request->get('enyear'));
         $dept_id = (int) $this->request->get('deptid');
         
-        if (empty($name) || $enyear < 1950 || $enyear > date('Y') || $dept_id < 1) {
-            $this->responseFail(self::ERR_OPER_FAIL, '请输入有效数据');
-        }
-        $dept_model = new Alumni_Model_Department;
-        $dept = $dept_model->fetch($dept_id);
-        if (!$dept || $dept['parent_id'] < 1) {
-            $this->responseFail(self::ERR_OPER_FAIL, '请选择到院系');
+        $class_service = new Alumni_Service_Class;
+        $result = $class_service->create($this->user->uid, $name, $enyear, $dept_id);
+        if (!$result) {
+            $this->responseFail($class_service->getErrorCode(), $class_service->getErrorMessaage());
         }
         
-        $model = new Alumni_Model_Class;
-        $result = $model->create($name, $enyear, $this->user->uid, $dept_id);
-        if (!$result) {
-            $this->responseFail(self::ERR_OPER_FAIL, '创建操作失败');
-        }
-        $uc_model = new Alumni_Model_User_Class;
-        $result = $uc_model->join($this->user->uid, $result, true);
-        if (!$result) {
-            $this->responseFail(self::ERR_OPER_FAIL, '创建操作失败');
-        }
         $this->responseOK($name . '创建成功');
+    }
+    
+    /**
+     * @return void
+     */
+    protected function forceLogin() {
+        if (!$this->user->hasLogin()) {
+            $this->responseFail(Alumni_Base_Service::ERR_NEED_LOGIN, '请登录后再操作');
+        }
     }
 
 }
