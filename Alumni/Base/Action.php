@@ -49,6 +49,7 @@ class Alumni_Base_Action extends Typecho_Widget implements Widget_Interface_Do {
     const ERR_OPER_FAIL = 'TE00003';
     const ERR_OPER_SUCC = 'TE00001';
     const ERR_OPER_OTHER = 'TE00000';
+    const ERR_NOT_FOUND = 'TE00004';
 
     public function __construct($request, $response, $params = NULL) {
         parent::__construct($request, $response, $params);
