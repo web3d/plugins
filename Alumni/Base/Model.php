@@ -121,6 +121,12 @@ class Alumni_Base_Model {
         return $where;
     }
 
+    /**
+     * 给数据加引号
+     * @param mixed|string|int|array|boolean $str
+     * @param boolean $noarray
+     * @return string
+     */
     protected function quote($str, $noarray = false) {
 
         if (is_string($str))
@@ -146,6 +152,11 @@ class Alumni_Base_Model {
         return '\'\'';
     }
 
+    /**
+     * 给字段名加引号
+     * @param mixed|array|string $field
+     * @return string
+     */
     protected function quoteField($field) {
         if (is_array($field)) {
             foreach ($field as $k => $v) {
@@ -159,6 +170,12 @@ class Alumni_Base_Model {
         return $field;
     }
 
+    /**
+     * 将数据以指定分隔符合并成字符串
+     * @param array $array
+     * @param string $glue
+     * @return string
+     */
     protected function implode($array, $glue = ',') {
         $sql = $comma = '';
         $glue = ' ' . trim($glue) . ' ';
@@ -169,10 +186,23 @@ class Alumni_Base_Model {
         return $sql;
     }
 
+    /**
+     * 将字段值以指定分隔符合并成字符串
+     * @param array $array
+     * @param string $glue
+     * @return string
+     */
     protected function implodeFieldValue($array, $glue = ',') {
         return $this->implode($array, $glue);
     }
 
+    /**
+     * 将SQL语句中的占位符填充成最终值
+     * @param string $sql
+     * @param array|string $arg
+     * @return string
+     * @throws Typecho_Db_Query_Exception
+     */
     protected function format($sql, $arg) {
         $count = substr_count($sql, '%');
         if (!$count) {

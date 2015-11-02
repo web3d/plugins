@@ -176,6 +176,11 @@ class Alumni_Base_Action extends Typecho_Widget implements Widget_Interface_Do {
         $this->response(array('ret' => 1, 'count' => (int)$totalCount, 'pageIndex' => (int)$pageIndex, 'pageSize' => (int)$pageSize, 'data' => $data));
     }
     
+    /**
+     * 输出数据到客户端
+     * 
+     * @param mixed $data
+     */
     public function response($data) {
         $this->response->throwJson($data);
         exit;
