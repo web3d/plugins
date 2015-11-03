@@ -29,7 +29,7 @@ class Alumni_Action_Dept extends Alumni_Base_Action {
     /**
      * ajax方式获取列表
      */
-    public function ajaxQuery() {
+    public function query() {
         //$id = (int) $this->request->get('id');
         
         $model = new Alumni_Model_Department();
@@ -42,7 +42,7 @@ class Alumni_Action_Dept extends Alumni_Base_Action {
     /**
      * 查看指定ID下的院系结构 基本信息及相关班级
      */
-    public function view() {
+    public function get() {
         $id = $this->request->get('id');
     }
     

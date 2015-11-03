@@ -31,16 +31,9 @@ class Alumni_Plugin implements Typecho_Plugin_Interface {
         Helper::addAction('alumni_user', 'Alumni_Action_User');
         
         //向系统前台注册新的action
-        Helper::addRoute('alumni_main', '/alumni/', 'Alumni_Action_Main', 'action');
-        Helper::addRoute('alumni_dept_main', '/alumni/depts', 'Alumni_Action_Dept', 'action');
-        Helper::addRoute('alumni_dept_main_ajax', '/alumni/depts/ajax', 'Alumni_Action_Dept', 'ajaxQuery');
-        Helper::addRoute('alumni_dept_view', '/alumni/dept[id:digital]', 'Alumni_Action_Dept', 'view');
-        Helper::addRoute('alumni_class_main', '/alumni/classes', 'Alumni_Action_Class', 'action');
-        Helper::addRoute('alumni_class_main_bydeptid', '/alumni/classes/[deptid:digital]', 'Alumni_Action_Class', 'action');
-        Helper::addRoute('alumni_class_view', '/alumni/class/[id:digital]', 'Alumni_Action_Class', 'view');
-        Helper::addRoute('alumni_class_join', '/alumni/class/join', 'Alumni_Action_Class', 'join');
-        Helper::addRoute('alumni_class_create', '/alumni/class/create', 'Alumni_Action_Class', 'create');
-        Helper::addRoute('alumni_user', '/alumni/user', 'Alumni_Action_User', 'action');
+        //将页面-p与API-api分离的方式来开发,便于将来多端开发
+        $routes = require dirname(__FILE__) . '/routes.conf.php';
+        Alumni_Base_Helper::addRoutes($routes);
         //后台管理面板
         Helper::addPanel(1, 'Alumni/panel.php', '校友录管理', '管理面板', 'administrator');
 
@@ -90,14 +83,15 @@ class Alumni_Plugin implements Typecho_Plugin_Interface {
      * @throws Typecho_Plugin_Exception
      */
     public static function deactivate() {
-        Helper::removeRoute('alumni_main');
-        Helper::removeRoute('alumni_dept_main');
-        Helper::removeRoute('alumni_dept_view');
-        Helper::removeRoute('alumni_class_main');
-        Helper::removeRoute('alumni_class_view');
-        Helper::removeRoute('alumni_class_join');
-        Helper::removeRoute('alumni_class_create');
-        Helper::removeRoute('alumni_user');
+        $routes = require dirname(__FILE__) . '/routes.conf.php';
+        
+        foreach ($routes as $key => $value) {
+            if (!$key) {
+                continue;
+            }
+            
+            Helper::removeRoute($key);
+        }
         
         Helper::removePanel(1, 'Alumni/panel.php');
     }

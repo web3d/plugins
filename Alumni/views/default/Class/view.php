@@ -9,10 +9,10 @@ $this->need('header.php', true);
 	<h2 class="post-title"><?php echo $class['name'] ?></h2>
         
         <?php if (!$has_joined): ?>
-        <a href="<?php echo $this->url('alumni_class_join');?>" id="join-class-btn" data-classid="<?php echo $class['id'];?>">申请加入</a>
+        <a href="<?php echo $this->url('alumni_api_class_join');?>" id="join-class-btn" data-classid="<?php echo $class['id'];?>">申请加入</a>
         <?php endif;?>
         
-        <a href="<?php echo $this->url('alumni_class_create');?>" id="create-class-btn" data-classid="<?php echo $class['id'];?>">创建新的</a>
+        <a href="<?php echo $this->url('alumni_api_class_create');?>" id="create-class-btn" data-classid="<?php echo $class['id'];?>">创建新的</a>
         
         <?php foreach ($class as $key => $value): ?>
         <p><?php echo $key;?>:<?php echo $value;?></p>
@@ -24,7 +24,7 @@ $this->need('header.php', true);
 <?php $this->need('sidebar.php', true); ?>
 <script type="text/tecblock" id="class-create-form-script">
     <div class="col-mb-12 col-8">
-    <form method="post" action="<?php echo $this->url('alumni_class_create');?>" id="class-create-form">
+    <form method="post" action="<?php echo $this->url('alumni_api_class_create');?>" id="class-create-form">
         <p id="class-create-error-tips">
         
         </p>
