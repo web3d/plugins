@@ -34,7 +34,7 @@ class Alumni_Plugin implements Typecho_Plugin_Interface {
         
         //向系统前台注册新的action
         //将页面-p与API-api分离的方式来开发,便于将来多端开发
-        $routes = require dirname(__FILE__) . '/routes.conf.php';
+        $routes = require dirname(__FILE__) . '/conf/routes.conf.php';
         Alumni_Base_Helper::addRoutes($routes);
         //后台管理面板
         Helper::addPanel(1, 'Alumni/panel.php', '校友录管理', '管理面板', 'administrator');
@@ -85,7 +85,7 @@ class Alumni_Plugin implements Typecho_Plugin_Interface {
      * @throws Typecho_Plugin_Exception
      */
     public static function deactivate() {
-        $routes = require dirname(__FILE__) . '/routes.conf.php';
+        $routes = require dirname(__FILE__) . '/conf/routes.conf.php';
         
         foreach ($routes as $key => $value) {
             if (!$key) {
