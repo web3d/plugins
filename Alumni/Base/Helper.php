@@ -1,5 +1,7 @@
 <?php
 
+if (!defined('__TYPECHO_ROOT_DIR__')) exit; 
+
 class Alumni_Base_Helper {
     
     /**
