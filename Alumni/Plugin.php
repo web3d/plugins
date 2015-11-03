@@ -32,6 +32,8 @@ class Alumni_Plugin implements Typecho_Plugin_Interface {
         Helper::addAction('alumni_class', 'Alumni_Action_Class');
         Helper::addAction('alumni_user', 'Alumni_Action_User');
         
+        Typecho_Plugin::factory('Widget_User')->loginSucceed = array('Alumni_Handler_User', 'setUserOnline');
+        
         //向系统前台注册新的action
         //将页面-p与API-api分离的方式来开发,便于将来多端开发
         $routes = require dirname(__FILE__) . '/conf/routes.conf.php';
