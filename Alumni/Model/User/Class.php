@@ -8,7 +8,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 class Alumni_Model_User_Class extends Alumni_Base_Model {
     
     protected $table = 'alumni_user_class';
-    protected $pk = 'uid';
+    protected $pk = 'id';
     
     public function fetchAllByUser($uid, $fields = '*', $pageIndex = 1, $pageSize = 10, $filter = null) {
         return $this->fetchAll(array('uid' => $uid), $fields, $pageIndex, $pageSize, $filter);
